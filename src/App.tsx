@@ -1,18 +1,23 @@
-import { defineComponent, ref } from "vue";
+import { defineComponent } from "vue"
 
 export const App = defineComponent({
-  setup() {
-    const refCount = ref(0);
-    const onClick = () => {
-      refCount.value += 1;
-    };
-    return () => (
-      <>
-        <div>{refCount.value}</div>
-        <div>
-          <button onClick={onClick}>+1</button>
-        </div>
-      </>
-    );
-  },
-});
+	setup() {
+		return () => (
+			<>
+				<header>
+					导航
+					<ul>
+						<li>
+							<router-link to='/'>Foo</router-link>
+						</li>
+						<li>
+							<router-link to='/bar'>Bar</router-link>
+						</li>
+					</ul>
+				</header>
+				<router-view></router-view>
+				<footer>底部</footer>
+			</>
+		)
+	},
+})
