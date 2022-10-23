@@ -2,15 +2,21 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
+		background: linear-gradient(to bottom, #5C33BE 0%, #A573DC 100%);
     >header{
         flex-shrink: 0;
 				display: flex;
 				flex-direction: column;
 				justify-self: center;
 				align-items: center;
+				margin-top: 66px;
+				color:#D4D4EE;
     }
     >main{
         flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        
     }
     >footer{
         flex-shrink: 0;
