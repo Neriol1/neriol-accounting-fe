@@ -1,23 +1,12 @@
-import { defineComponent } from "vue"
+import { defineComponent } from 'vue'
+import s from './App.scss'
 
 export const App = defineComponent({
-	setup() {
-		return () => (
-			<>
-				<header>
-					导航
-					<ul>
-						<li>
-							<router-link to='/'>Foo</router-link>
-						</li>
-						<li>
-							<router-link to='/bar'>Bar</router-link>
-						</li>
-					</ul>
-				</header>
-				<router-view></router-view>
-				<footer>底部</footer>
-			</>
-		)
-	},
+  setup() {
+    return () => (
+      <div>
+        <router-view></router-view>
+      </div>
+    )
+  },
 })
