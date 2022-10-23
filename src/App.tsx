@@ -1,10 +1,10 @@
 import { defineComponent } from 'vue'
-import s from './App.scss'
+import './App.scss'
 
 export const App = defineComponent({
   setup() {
     return () => (
-      <div>
+      <div class='page'>
         <router-view></router-view>
       </div>
     )

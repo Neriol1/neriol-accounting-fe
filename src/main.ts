@@ -3,8 +3,6 @@ import { App } from './App'
 import { createRouter } from 'vue-router'
 import { routes } from './router/routes'
 import { history } from './utils/history'
-import './assets/stylesheets/reset.scss'
-import './assets/stylesheets/vars.scss'
 
 const router = createRouter({
   history: history,
