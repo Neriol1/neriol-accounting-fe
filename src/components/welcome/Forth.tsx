@@ -7,6 +7,11 @@ export const Forth = defineComponent({
       <div class={s.wrapper}>
         <div class={s.card}>
           <img src={cloud} />
+          <h2>
+            云备份
+            <br />
+            再也不怕数据丢失
+          </h2>
         </div>
         <div class={s.actions}>
           <router-link class={s.fake} to=''></router-link>

@@ -7,6 +7,11 @@ export const Second = defineComponent({
       <div class={s.wrapper}>
         <div class={s.card}>
           <img src={clock} />
+          <h2>
+            每日提醒
+            <br />
+            不会遗漏每一笔账单
+          </h2>
         </div>
         <div class={s.actions}>
           <router-link class={s.fake} to=''>

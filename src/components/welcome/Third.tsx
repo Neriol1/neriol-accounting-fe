@@ -7,6 +7,11 @@ export const Third = defineComponent({
       <div class={s.wrapper}>
         <div class={s.card}>
           <img src={chart} />
+          <h2>
+            数据可视化
+            <br />
+            收支一目了然
+          </h2>
         </div>
         <div class={s.actions}>
           <router-link class={s.fake} to=''>
