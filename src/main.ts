@@ -4,6 +4,8 @@ import { createRouter } from 'vue-router'
 import { routes } from './router/routes'
 import { history } from './utils/history'
 
+import '@svgstore'
+
 const router = createRouter({
   history: history,
   routes: routes,
