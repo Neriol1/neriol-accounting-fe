@@ -1,13 +1,14 @@
 import { defineComponent, ref, Transition, VNode } from 'vue'
 import s from './Welcome.module.scss'
-import logo from '../assets/icons/mangosteen.svg'
 import { RouteLocationNormalizedLoaded, RouterView } from 'vue-router'
 export const Welcome = defineComponent({
   setup: (props, context) => {
     return () => (
       <div class={s.wrapper}>
         <header>
-          <img src={logo} alt='logo' />
+          <svg>
+            <use xlinkHref='#mangosteen'></use>
+          </svg>
           <h1>Neriol</h1>
         </header>
         <main class={s.main}>

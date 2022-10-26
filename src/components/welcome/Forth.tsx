@@ -1,9 +1,10 @@
 import { FunctionalComponent } from 'vue'
-import cloud from '../../assets/icons/cloud.svg'
 import s from './welcome.module.scss'
 export const Forth: FunctionalComponent = () => (
   <div class={s.card}>
-    <img src={cloud} />
+    <svg>
+      <use xlinkHref='#cloud'></use>
+    </svg>
     <h2>
       云备份
       <br />

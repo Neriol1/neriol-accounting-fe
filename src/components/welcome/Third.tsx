@@ -1,9 +1,10 @@
 import { FunctionalComponent } from 'vue'
-import chart from '../../assets/icons/chart.svg'
 import s from './welcome.module.scss'
 export const Third: FunctionalComponent = () => (
   <div class={s.card}>
-    <img src={chart} />
+    <svg>
+      <use xlinkHref='#chart'></use>
+    </svg>
     <h2>
       数据可视化
       <br />
