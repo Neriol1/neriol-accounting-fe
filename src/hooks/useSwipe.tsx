@@ -2,7 +2,16 @@ import { computed, onMounted, onUnmounted, ref, Ref } from 'vue'
 
 type Point = { x: number; y: number }
 
-export const useSwipe = (element: Ref<HTMLElement | null>) => {
+interface Options {
+  beforeStart?: (e: TouchEvent | undefined) => void
+  afterStart?: (e: TouchEvent | undefined) => void
+  beforeMove?: (e: TouchEvent | undefined) => void
+  afterMove?: (e: TouchEvent | undefined) => void
+  beforeEnd?: (e: TouchEvent | undefined) => void
+  afterEnd?: (e: TouchEvent | undefined) => void
+}
+
+export const useSwipe = (element: Ref<HTMLElement | null>, options: Options = {}) => {
   const start = ref<Point | null>(null)
   const end = ref<Point | null>(null)
   const swiping = ref(false)
@@ -26,16 +35,22 @@ export const useSwipe = (element: Ref<HTMLElement | null>) => {
   })
 
   const onStart = (e: TouchEvent) => {
+    options?.beforeStart?.(e)
     swiping.value = true
     end.value = start.value = { x: e.touches[0].clientX, y: e.touches[0].clientY }
+    options?.afterStart?.(e)
   }
 
   const onMove = (e: TouchEvent) => {
+    options?.beforeMove?.(e)
     end.value = { x: e.touches[0].clientX, y: e.touches[0].clientY }
+    options?.afterMove?.(e)
   }
 
   const onEnd = (e: TouchEvent) => {
+    options?.beforeEnd?.(e)
     swiping.value = false
+    options?.afterEnd?.(e)
   }
 
   onMounted(() => {
