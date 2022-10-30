@@ -3,7 +3,7 @@ import { FunctionalComponent } from 'vue'
 export const First: FunctionalComponent = () => (
   <div class={s.card}>
     <svg>
-      <use xlinkHref='#piggy_bank'></use>
+      <use xlinkHref='#pig'></use>
     </svg>
     <h2>
       会挣钱
