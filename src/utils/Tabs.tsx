@@ -35,6 +35,7 @@ export const Tabs = defineComponent({
               </li>
             ))}
           </ol>
+          <div>{array.find(v => v.props?.name === props.selected)}</div>
         </div>
       )
     }
