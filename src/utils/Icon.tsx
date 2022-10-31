@@ -12,6 +12,7 @@ export type IconName =
   | 'menuChart'
   | 'notify'
   | 'export'
+  | 'left'
 
 export const Icon = defineComponent({
   props: {

@@ -1,4 +1,6 @@
 import { defineComponent, PropType, ref } from 'vue'
+import { MainLayout } from '../../layouts/MainLayout'
+import { Icon } from '../../utils/Icon'
 import s from './ItemCreate.module.scss'
 export const ItemCreate = defineComponent({
   props: {
@@ -8,9 +10,16 @@ export const ItemCreate = defineComponent({
     },
   },
   setup: (props, context) => {
+    const onClick = () => {}
     return () => (
       <>
-        <div>1</div>
+        <MainLayout>
+          {{
+            icon: () => <Icon name='left' class={s.iconNav} onClick={onClick} />,
+            title: () => '记一笔',
+            default: () => '111',
+          }}
+        </MainLayout>
       </>
     )
   },
