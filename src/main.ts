@@ -6,6 +6,8 @@ import { history } from './utils/history'
 
 import '@svgstore'
 
+import 'vant/lib/index.css';
+
 const router = createRouter({
   history: history,
   routes: routes,
