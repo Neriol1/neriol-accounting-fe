@@ -17,7 +17,25 @@ export const InputPad = defineComponent({
     const refDate = ref<Date>(new Date())
     const appendText = (n: number | string) => {
       const nString = n.toString()
-      refAmount.value += nString
+      const doIndex = refAmount.value.indexOf('.')
+      if(refAmount.value.length > 13) return 
+      //限制两位小数
+      if(doIndex >= 0 && refAmount.value.length - doIndex> 2){
+        return 
+      }
+      if(nString === '.'){
+        if(doIndex >= 0) return
+      }else if(nString === '0'){
+       if(doIndex === -1){
+          if(refAmount.value === '0') return
+       }
+      }else{
+        if (refAmount.value === '0') {
+          refAmount.value = ''
+        }
+      }
+
+      refAmount.value += n.toString()
     }
     const buttons = [
       { text: '1', onclick: () => {appendText(1)} },
