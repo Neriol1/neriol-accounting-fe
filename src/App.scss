@@ -8,5 +8,6 @@ body {
 }
 
 ::-webkit-scrollbar {
-    visibility: hidden;
+    // visibility: hidden;
+    display: none;
 }
