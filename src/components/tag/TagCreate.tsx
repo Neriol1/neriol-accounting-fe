@@ -3,9 +3,10 @@ import { MainLayout } from '../../layouts/MainLayout'
 import { Button } from '../../utils/Button'
 import { EmojiList } from '../../utils/EmojiList'
 import { Icon } from '../../utils/Icon'
-import s from './TagCreate.module.scss'
+import s from './Tag.module.scss'
 import '../../utils/validate'
 import { Rules,validate } from '../../utils/validate'
+import { TagForm } from './TagForm'
 export const TagCreate = defineComponent({
   setup: (props, context) => {
     const formData = reactive({
@@ -34,38 +35,7 @@ export const TagCreate = defineComponent({
             icon: () => <Icon name='left' onClick={() => {}}></Icon>,
             title: () => <span>新建标签</span>,
             default: () => (
-              <form class={s.form} onSubmit={onsubmit}>
-                <div class={s.formRow}>
-                  <label class={s.formLabel}>
-                    <span class={s.formItem_name}>标签名</span>
-                    <div class={s.formItem_value}>
-                      <input v-model={formData.name} class={[s.formItem, s.input, errors['name'] ? s.error : '']}></input>
-                    </div>
-                    <div class={s.formItem_errorHint}>
-                      <span>{errors['name'] ? errors['name']?.[0] :  ' '}</span>
-                    </div>
-                  </label>
-                </div>
-
-                <div class={s.formRow}>
-                  <label class={s.formLabel}>
-                    <span class={s.formItem_name}>符号 {formData.sign}</span>
-                    <div class={s.formItem_value}>
-                      <EmojiList v-model={formData.sign} class={[s.formItem, s.emojiList, errors['sign'] ? s.error : '']}></EmojiList>
-                    </div>
-                    <div class={s.formItem_errorHint}>
-                      <span>{errors['sign'] ? errors['sign']?.[0] :  ' '}</span>
-                    </div>
-                  </label>
-                </div>
-
-                <p class={s.tips}>记账时长按标签即可进行编辑</p>
-                <div class={s.formRow}>
-                  <div class={s.formItem_value}>
-                    <Button class={[s.formItem, s.button]}>确定</Button>
-                  </div>
-                </div>
-              </form>
+             <TagForm></TagForm>
             ),
           }}
         </MainLayout>
