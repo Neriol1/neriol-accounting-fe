@@ -2,6 +2,9 @@ import { defineComponent, PropType, ref } from 'vue'
 import s from './Tabs.module.scss'
 export const Tabs = defineComponent({
   props: {
+    classPrefix:{
+      type: String
+    },
     selected: {
       type: String as PropType<string>,
       required: false,
@@ -20,22 +23,22 @@ export const Tabs = defineComponent({
           throw new Error('<Tabs> only accept <Tab> as children')
         }
       }
+      const cp = props.classPrefix
       return (
-        <div class={s.tabs}>
-          <ol class={s.tabs_nav}>
-            {array.map(v => (
+        <div class={[s.tabs, cp + '_tabs']}>
+          <ol class={[s.tabs_nav, cp + '_tabs_nav']}>
+            {array.map((v) => (
               <li
-                class={props.selected === v.props?.name ? s.selected : ''}
+                class={[props.selected === v.props?.name ? [s.selected,cp+'_selected'] : '', cp + '_tabs_nav_item']}
                 onClick={() => {
                   props?.onUpdateSelected?.(v.props?.name)
                   context.emit('update:selected', v.props?.name)
-                }}
-              >
+                }}>
                 {v.props?.name}
               </li>
             ))}
           </ol>
-          <div>{array.find(v => v.props?.name === props.selected)}</div>
+          <div>{array.find((v) => v.props?.name === props.selected)}</div>
         </div>
       )
     }
