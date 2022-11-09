@@ -4,9 +4,11 @@ import s from './EmojiList.module.scss'
 export const EmojiList = defineComponent({
   props: {
     modelValue: {
-      type: String as PropType<string>,
-      required: false,
+      type: String
     },
+    onUpdateModelValue: {
+      type: Function as PropType<(emoji: string) => void>
+    }
   },
   setup: (props, context) => {
     const refSelected = ref(0)
@@ -45,7 +47,12 @@ export const EmojiList = defineComponent({
       refSelected.value = index
     }
     const onClickEmoji = (emoji: string) => {
-      context.emit('update:modelValue', emoji)
+      
+      if (props.onUpdateModelValue) {
+        props.onUpdateModelValue(emoji)
+      } else {
+        context.emit('update:modelValue', emoji)
+      }
     }
     return () => (
       <div class={s.emojiList}>
