@@ -20,13 +20,13 @@ export const TagForm = defineComponent({
     ]
     const errors = reactive<{ [k in keyof typeof formData]?: string[] }>({})
     const onsubmit = (e: Event) => {
+      e.preventDefault()
       Object.assign(errors, {
         name: undefined,
         sign: undefined,
       })
       Object.assign(errors, validate(formData, rules))
       console.log(errors, '--')
-      e.preventDefault()
     }
     return () => (
       <Form onSubmit={onsubmit}>
