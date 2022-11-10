@@ -14,6 +14,7 @@ import { ThirdActions } from '../components/welcome/ThirdActions'
 import { ItemPage } from '../views/ItemPage'
 import { SignInpage } from '../views/SignInPage'
 import { StartPage } from '../views/StartPage'
+import { StatisticsPage } from '../views/StatisticsPage'
 import { TagPage } from '../views/TagPage'
 import { Welcome } from '../views/Welcome'
 
@@ -54,4 +55,7 @@ export const routes: RouteRecordRaw[] = [
     path: '/sign_in',
     component: SignInpage,
   },
+  {
+    path: '/statistics', component: StatisticsPage
+  }
 ]
