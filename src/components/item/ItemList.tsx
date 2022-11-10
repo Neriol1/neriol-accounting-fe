@@ -21,14 +21,14 @@ export const ItemList = defineComponent({
       { start: time.firstDayOfYear().format(), end: time.lastDayOfYear().format() },
     ]
     const refOverlayVisible = ref(false)
-    watchEffect(()=>{
-      if(refSelected.value === '自定义时间'){
-        refOverlayVisible.value = true
-      }
-    })
     const onSubmitCustomTime = (e: Event) => {
       e.preventDefault()
       refOverlayVisible.value = false
+    }
+    const onUpdateSelected = (value:string)=>{
+      if(value === '自定义时间'){
+        refOverlayVisible.value = true
+      }
     }
     return () => (
       <MainLayout>
@@ -37,7 +37,10 @@ export const ItemList = defineComponent({
           icon: () => <Icon name='menu' />,
           default: () => (
             <>
-              <Tabs classPrefix={'customTabs'} v-model:selected={refSelected.value}>
+              <Tabs
+                classPrefix={'customTabs'}
+                v-model:selected={refSelected.value}
+                onUpdate:selected={onUpdateSelected}>
                 <Tab name='本月'>
                   <ItemSummary startDate={timeList[0].start} endDate={timeList[0].end} />
                 </Tab>
@@ -60,11 +63,11 @@ export const ItemList = defineComponent({
                       <FormItem type='date' label='开始时间' v-model={customTime.start}></FormItem>
                       <FormItem type='date' label='结束时间' v-model={customTime.end}></FormItem>
                       <FormItem>
-                      <div class={s.actions}>
-                        <button type="button">取消</button>
-                        <button type="submit">确认</button>
-                      </div>
-                    </FormItem>
+                        <div class={s.actions}>
+                          <button type='button' onClick={() => (refOverlayVisible.value = false)}>取消</button>
+                          <button type='submit'>确认</button>
+                        </div>
+                      </FormItem>
                     </Form>
                   </main>
                 </div>
