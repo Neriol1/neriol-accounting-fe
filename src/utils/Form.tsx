@@ -31,10 +31,13 @@ export const FormItem = defineComponent({
       type: String as PropType<string>,
     },
     type: {
-      type: String as PropType<'text' | 'emojiSelect' | 'date' | 'validationCode'>,
+      type: String as PropType<'text' | 'emojiSelect' | 'date' | 'validationCode' | 'select'>,
     },
     placeholder: {
       type: String as PropType<string>,
+    },
+    options: {
+      type: Array as PropType<Array<{ label: string, value: string }>>,
     }
   },
   emits:['update:modelValue'],
@@ -92,6 +95,17 @@ export const FormItem = defineComponent({
                 />
               </Popup>
             </>
+          )
+        case 'select':
+          return (
+            <select
+              class={[s.formItem, s.select]}
+              value={props.modelValue}
+              onChange={(e: any) => context.emit('update:modelValue', e.target.value)}>
+              {props.options?.map((option) => (
+                <option value={option.value}>{option.label}</option>
+              ))}
+            </select>
           )
         default:
           return context.slots.default?.()
