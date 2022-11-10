@@ -7,6 +7,7 @@ import { Time } from '../../utils/time'
 import s from './ItemList.module.scss'
 import { ItemSummary } from './ItemSummary'
 import { Form, FormItem } from '../../utils/Form'
+import { OverlayIcon } from '../../utils/Overlay'
 export const ItemList = defineComponent({
   setup: (props, context) => {
     const refSelected = ref('本月')
@@ -34,7 +35,7 @@ export const ItemList = defineComponent({
       <MainLayout>
         {{
           title: () => '山竹记账',
-          icon: () => <Icon name='menu' />,
+          icon: () => <OverlayIcon />,
           default: () => (
             <>
               <Tabs
