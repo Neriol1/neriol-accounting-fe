@@ -33,6 +33,7 @@ export const FormItem = defineComponent({
       type: String as PropType<'text' | 'emojiSelect' | 'date'>,
     },
   },
+  emits:['update:modelValue'],
   setup: (props, context) => {
     const refDateVisible = ref(false)
     const content = computed(() => {
@@ -48,7 +49,7 @@ export const FormItem = defineComponent({
           return (
             <EmojiList
               modelValue={props.modelValue?.toString()}
-              onUpdateModelValue={(value) => context.emit('update:modelValue', value)}
+              onUpdate:modelValue={(value) => context.emit('update:modelValue', value)}
               class={[s.formItem, s.emojiList, props.error === '　' || !!props.error ? '' : s.error]}></EmojiList>
           )
         case 'date':

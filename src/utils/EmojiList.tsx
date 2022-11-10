@@ -6,10 +6,8 @@ export const EmojiList = defineComponent({
     modelValue: {
       type: String
     },
-    onUpdateModelValue: {
-      type: Function as PropType<(emoji: string) => void>
-    }
   },
+  emits:['update:modelValue'],
   setup: (props, context) => {
     const refSelected = ref(0)
     const table: [string, string[]][] = [
@@ -47,12 +45,7 @@ export const EmojiList = defineComponent({
       refSelected.value = index
     }
     const onClickEmoji = (emoji: string) => {
-      
-      if (props.onUpdateModelValue) {
-        props.onUpdateModelValue(emoji)
-      } else {
         context.emit('update:modelValue', emoji)
-      }
     }
     return () => (
       <div class={s.emojiList}>
