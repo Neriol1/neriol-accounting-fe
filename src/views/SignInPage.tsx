@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { defineComponent, PropType, reactive, ref } from 'vue'
 import { MainLayout } from '../layouts/MainLayout'
 import { Button } from '../utils/Button'
@@ -11,6 +12,7 @@ export const SignInpage = defineComponent({
       email: '',
       code: '',
     })
+    const refValidationCode = ref<any>()
 
     const errors = reactive<{ [k in keyof typeof formData]?: string[] }>({
       email: [],
@@ -33,8 +35,9 @@ export const SignInpage = defineComponent({
       )
     }
 
-    const onClickSendValidationCode = ()=>{
-      console.log(111);
+    const onClickSendValidationCode = async ()=>{
+      const response = await axios.post('api/v1/validation_codes',{email:formData.email})
+      refValidationCode.value.startCountDown()
     }
 
     return () => (
@@ -63,6 +66,7 @@ export const SignInpage = defineComponent({
                   placeholder='请输入六位数字'
                   error={errors['code']?.[0]}
                   onClick={onClickSendValidationCode}
+                  ref={refValidationCode}
                 />
                 <FormItem style={{ paddingTop: '96px' }}>
                   <Button>登录</Button>

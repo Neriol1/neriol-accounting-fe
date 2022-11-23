@@ -21,4 +21,11 @@ export default defineConfig({
       resolvers: [VantResolver()],
     }),
   ],
+  server:{
+    proxy:{
+      '/api/v1':{
+        target:'http://neriol.cn:3000/'
+      }
+    }
+  }
 })
