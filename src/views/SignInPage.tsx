@@ -33,6 +33,10 @@ export const SignInpage = defineComponent({
       )
     }
 
+    const onClickSendValidationCode = ()=>{
+      console.log(111);
+    }
+
     return () => (
       <MainLayout>
         {{
@@ -58,6 +62,7 @@ export const SignInpage = defineComponent({
                   type='validationCode'
                   placeholder='请输入六位数字'
                   error={errors['code']?.[0]}
+                  onClick={onClickSendValidationCode}
                 />
                 <FormItem style={{ paddingTop: '96px' }}>
                   <Button>登录</Button>
