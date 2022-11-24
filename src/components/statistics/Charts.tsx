@@ -1,5 +1,5 @@
 import { defineComponent, PropType, ref } from 'vue';
-import { FormItem } from '../../utils/Form';
+import { FormItem } from '../../shared/Form';
 import { Bars } from './Bars';
 import s from './Charts.module.scss';
 import { LineChart } from './LineChart';

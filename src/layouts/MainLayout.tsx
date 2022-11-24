@@ -1,5 +1,5 @@
 import { defineComponent, ref } from 'vue'
-import { Navbar } from '../utils/Navbar'
+import { Navbar } from '../shared/Navbar'
 import s from './MainLayout.module.scss';
 
 export const MainLayout = defineComponent({

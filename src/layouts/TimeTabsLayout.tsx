@@ -1,10 +1,10 @@
 import { Overlay } from 'vant';
 import { defineComponent, PropType, reactive, ref } from 'vue';
 import { ItemSummary } from '../components/item/ItemSummary';
-import { Form, FormItem } from '../utils/Form';
-import { OverlayIcon } from '../utils/Overlay';
-import { Tab, Tabs } from '../utils/Tabs';
-import { Time } from '../utils/time';
+import { Form, FormItem } from '../shared/Form';
+import { OverlayIcon } from '../shared/Overlay';
+import { Tab, Tabs } from '../shared/Tabs';
+import { Time } from '../shared/time';
 import { MainLayout } from './MainLayout';
 import s from './TimeTabsLayout.module.scss';
 

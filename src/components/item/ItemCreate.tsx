@@ -1,7 +1,7 @@
 import { defineComponent, PropType, ref } from 'vue'
 import { MainLayout } from '../../layouts/MainLayout'
-import { Icon } from '../../utils/Icon'
-import { Tab, Tabs } from '../../utils/Tabs'
+import { Icon } from '../../shared/Icon'
+import { Tab, Tabs } from '../../shared/Tabs'
 import { InputPad } from './InputPad'
 import s from './ItemCreate.module.scss'
 export const ItemCreate = defineComponent({

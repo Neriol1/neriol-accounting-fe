@@ -1,12 +1,12 @@
 import { defineComponent, PropType, reactive, toRaw } from 'vue'
 import { MainLayout } from '../../layouts/MainLayout'
-import { Button } from '../../utils/Button'
-import { EmojiList } from '../../utils/EmojiList'
-import { Icon } from '../../utils/Icon'
+import { Button } from '../../shared/Button'
+import { EmojiList } from '../../shared/EmojiList'
+import { Icon } from '../../shared/Icon'
 import s from './Tag.module.scss'
-import '../../utils/validate'
-import { Rules, validate } from '../../utils/validate'
-import { Form, FormItem } from '../../utils/Form'
+import '../../shared/validate'
+import { Rules, validate } from '../../shared/validate'
+import { Form, FormItem } from '../../shared/Form'
 export const TagForm = defineComponent({
   setup: (props, context) => {
     const formData = reactive({

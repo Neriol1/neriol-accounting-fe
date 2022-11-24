@@ -1,10 +1,10 @@
 import axios from 'axios'
 import { defineComponent, PropType, reactive, ref } from 'vue'
 import { MainLayout } from '../layouts/MainLayout'
-import { Button } from '../utils/Button'
-import { Form, FormItem } from '../utils/Form'
-import { Icon } from '../utils/Icon'
-import { validate } from '../utils/validate'
+import { Button } from '../shared/Button'
+import { Form, FormItem } from '../shared/Form'
+import { Icon } from '../shared/Icon'
+import { validate } from '../shared/validate'
 import s from './SignInPage.module.scss'
 export const SignInpage = defineComponent({
   setup: (props, context) => {

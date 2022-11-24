@@ -2,7 +2,7 @@ import { defineComponent, ref, Transition, VNode, watchEffect } from 'vue'
 import s from './Welcome.module.scss'
 import { RouteLocationNormalizedLoaded, RouterView, useRoute, useRouter } from 'vue-router'
 import { useSwipe } from '../hooks/useSwipe'
-import { throttle } from '../utils/throttle'
+import { throttle } from '../shared/throttle'
 const routesMap: Record<string, string> = {
   welcome1: '/welcome/2',
   welcome2: '/welcome/3',

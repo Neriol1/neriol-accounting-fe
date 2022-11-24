@@ -1,8 +1,8 @@
 import { defineComponent, PropType, ref } from 'vue'
-import { Icon } from '../../utils/Icon'
+import { Icon } from '../../shared/Icon'
 import s from './InputPad.module.scss'
 import { DatetimePicker, Popup } from 'vant';
-import { Time } from '../../utils/time';
+import { Time } from '../../shared/time';
 
 export const InputPad = defineComponent({
   // props: {

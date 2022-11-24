@@ -1,12 +1,12 @@
 import { defineComponent, ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import { MainLayout } from '../layouts/MainLayout'
-import { Button } from '../utils/Button'
-import { Center } from '../utils/Center'
-import { FloatButton } from '../utils/FloatButton'
-import { Icon } from '../utils/Icon'
-import { Navbar } from '../utils/Navbar'
-import { Overlay, OverlayIcon } from '../utils/Overlay'
+import { Button } from '../shared/Button'
+import { Center } from '../shared/Center'
+import { FloatButton } from '../shared/FloatButton'
+import { Icon } from '../shared/Icon'
+import { Navbar } from '../shared/Navbar'
+import { Overlay, OverlayIcon } from '../shared/Overlay'
 import s from './StartPage.module.scss'
 export const StartPage = defineComponent({
   setup: (props, context) => {

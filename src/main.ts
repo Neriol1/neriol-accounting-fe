@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import { App } from './App'
 import { createRouter } from 'vue-router'
 import { routes } from './route/routes'
-import { history } from './utils/history'
+import { history } from './shared/history'
 
 import '@svgstore'
 
