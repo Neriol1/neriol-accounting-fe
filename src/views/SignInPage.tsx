@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { defineComponent, PropType, reactive, ref } from 'vue'
+import { useBool } from '../hooks/useBool'
 import { MainLayout } from '../layouts/MainLayout'
 import { Button } from '../shared/Button'
 import { Form, FormItem } from '../shared/Form'
@@ -19,6 +20,7 @@ export const SignInpage = defineComponent({
       email: [],
       code: [],
     })
+    const { ref: refDisabled, toggle, on: disable, off: enable } = useBool(false)
 
     const onSubmit = (e: Event) => {
       e.preventDefault()
@@ -39,8 +41,10 @@ export const SignInpage = defineComponent({
       Object.assign(errors,error.response.data.errors)
     }
     const onClickSendValidationCode = async ()=>{
+      disable()
       const response = await http.post('validation_codes',{email:formData.email})
         .catch(onError)
+        .finally(enable)
       refValidationCode.value.startCountDown()
     }
 
@@ -72,9 +76,10 @@ export const SignInpage = defineComponent({
                   onClick={onClickSendValidationCode}
                   ref={refValidationCode}
                   countFrom={1}
+                  disabled={refDisabled.value}
                 />
                 <FormItem style={{ paddingTop: '96px' }}>
-                  <Button>登录</Button>
+                  <Button type='submit'>登录</Button>
                 </FormItem>
               </Form>
             </div>

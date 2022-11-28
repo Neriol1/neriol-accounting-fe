@@ -4,6 +4,7 @@ import { DatetimePicker, Popup } from 'vant'
 import s from './Form.module.scss'
 import { Time } from './time'
 import { Button } from './Button'
+import { getFriendlyError } from './getFriendlyError'
 export const Form = defineComponent({
   props: {
     onSubmit: {
@@ -43,7 +44,8 @@ export const FormItem = defineComponent({
     countFrom:{
       type:Number,
       default:60,
-    }
+    },
+    disabled:Boolean
   },
   emits:['update:modelValue'],
   setup: (props, context) => {
@@ -88,7 +90,7 @@ export const FormItem = defineComponent({
                 placeholder={props.placeholder}
                 onInput={(e: any) => context.emit('update:modelValue', e.target.value)}
               />
-              <Button disabled={isCounting.value} onClick={props.onClick} class={[s.formItem, s.button, s.validationCodeButton]}>
+              <Button disabled={isCounting.value || props.disabled} onClick={props.onClick} class={[s.formItem, s.button, s.validationCodeButton]}>
                 { isCounting.value ? `发送验证码(${count.value})` : '发送验证码'}
               </Button>
             </>
@@ -139,7 +141,7 @@ export const FormItem = defineComponent({
           {props.label && <span class={s.formItem_name}>{props.label}</span>}
           <div class={s.formItem_value}>{content.value}</div>
           <div class={s.formItem_errorHint}>
-            <span>{props.error ?? '　'}</span>
+            <span>{props.error ? getFriendlyError(props.error) : '　'}</span>
           </div>
         </label>
       </div>
