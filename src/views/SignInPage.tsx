@@ -3,6 +3,7 @@ import { defineComponent, PropType, reactive, ref } from 'vue'
 import { MainLayout } from '../layouts/MainLayout'
 import { Button } from '../shared/Button'
 import { Form, FormItem } from '../shared/Form'
+import { http } from '../shared/Http'
 import { Icon } from '../shared/Icon'
 import { validate } from '../shared/validate'
 import s from './SignInPage.module.scss'
@@ -34,9 +35,12 @@ export const SignInpage = defineComponent({
         ]),
       )
     }
-
+    const onError = (error:any)=>{
+      Object.assign(errors,error.response.data.errors)
+    }
     const onClickSendValidationCode = async ()=>{
-      const response = await axios.post('api/v1/validation_codes',{email:formData.email})
+      const response = await http.post('validation_codes',{email:formData.email})
+        .catch(onError)
       refValidationCode.value.startCountDown()
     }
 
@@ -67,6 +71,7 @@ export const SignInpage = defineComponent({
                   error={errors['code']?.[0]}
                   onClick={onClickSendValidationCode}
                   ref={refValidationCode}
+                  countFrom={1}
                 />
                 <FormItem style={{ paddingTop: '96px' }}>
                   <Button>登录</Button>
