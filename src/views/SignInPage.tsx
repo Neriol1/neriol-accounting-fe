@@ -1,28 +1,28 @@
-import axios from 'axios'
-import { defineComponent, PropType, reactive, ref } from 'vue'
+import { defineComponent, reactive, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useBool } from '../hooks/useBool'
 import { MainLayout } from '../layouts/MainLayout'
 import { Button } from '../shared/Button'
 import { Form, FormItem } from '../shared/Form'
-import { history } from '../shared/history'
 import { http } from '../shared/Http'
 import { Icon } from '../shared/Icon'
+import { refreshMe } from '../shared/me'
 import { hasErrors, validate } from '../shared/validate'
 import s from './SignInPage.module.scss'
 export const SignInpage = defineComponent({
   setup: (props, context) => {
     const formData = reactive({
-      email: 'neriol@foxmail.com',
+      email: '',
       code: '',
     })
     const refValidationCode = ref<any>()
-
     const errors = reactive<{ [k in keyof typeof formData]?: string[] }>({
       email: [],
       code: [],
     })
     const { ref: refDisabled, toggle, on: disable, off: enable } = useBool(false)
-
+    const router = useRouter()
+    const route = useRoute()
     const onSubmit = async (e: Event) => {
       e.preventDefault()
       Object.assign(errors, { email: [], code: [], })
@@ -37,7 +37,9 @@ export const SignInpage = defineComponent({
       if(!hasErrors(errors)){
         const response = await http.post<{jwt:string}>('/session', formData)
         localStorage.setItem('jwt',response.data.jwt)
-        history.push('/')
+        const returnTo = route.query.returnTo?.toString()
+        refreshMe()
+        router.push(returnTo || '/')
       }
     }
     const onError = (error: any) => Object.assign(errors, error.response.data.errors) 
