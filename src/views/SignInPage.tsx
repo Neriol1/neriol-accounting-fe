@@ -4,14 +4,15 @@ import { useBool } from '../hooks/useBool'
 import { MainLayout } from '../layouts/MainLayout'
 import { Button } from '../shared/Button'
 import { Form, FormItem } from '../shared/Form'
+import { history } from '../shared/history'
 import { http } from '../shared/Http'
 import { Icon } from '../shared/Icon'
-import { validate } from '../shared/validate'
+import { hasErrors, validate } from '../shared/validate'
 import s from './SignInPage.module.scss'
 export const SignInpage = defineComponent({
   setup: (props, context) => {
     const formData = reactive({
-      email: '',
+      email: 'neriol@foxmail.com',
       code: '',
     })
     const refValidationCode = ref<any>()
@@ -22,12 +23,9 @@ export const SignInpage = defineComponent({
     })
     const { ref: refDisabled, toggle, on: disable, off: enable } = useBool(false)
 
-    const onSubmit = (e: Event) => {
+    const onSubmit = async (e: Event) => {
       e.preventDefault()
-      Object.assign(errors, {
-        email: [],
-        code: [],
-      })
+      Object.assign(errors, { email: [], code: [], })
       Object.assign(
         errors,
         validate(formData, [
@@ -36,10 +34,13 @@ export const SignInpage = defineComponent({
           { key: 'code', type: 'required', message: '必填' },
         ]),
       )
+      if(!hasErrors(errors)){
+        const response = await http.post<{jwt:string}>('/session', formData)
+        localStorage.setItem('jwt',response.data.jwt)
+        history.push('/')
+      }
     }
-    const onError = (error:any)=>{
-      Object.assign(errors,error.response.data.errors)
-    }
+    const onError = (error: any) => Object.assign(errors, error.response.data.errors) 
     const onClickSendValidationCode = async ()=>{
       disable()
       const response = await http.post('validation_codes',{email:formData.email})

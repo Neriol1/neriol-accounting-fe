@@ -1,13 +1,11 @@
 interface FData {
   [key: string]: string | number | null | undefined | FData
 }
-
 type Rule<T> = {
   message: string
   key: keyof T
 } & ({ type: 'required' } | { type: 'pattern'; pattern: RegExp })
 type Rules<T> = Rule<T>[]
-
 export type { FData, Rule, Rules }
 
 export const validate = <T extends FData>(formData: T, rules: Rules<T>) => {
@@ -15,32 +13,41 @@ export const validate = <T extends FData>(formData: T, rules: Rules<T>) => {
     [k in keyof T]?: string[]
   }
   const errors: Errors = {}
-  rules.forEach((rule) => {
+  rules.forEach(rule=>{
+    const {key,type,message} = rule
     const value = formData[rule.key]
-    if (rule.type === 'required') {
-      if (!value || value === '') {
-        errors[rule.key] = errors[rule.key] ?? []
-        errors[rule.key]?.push(rule.message)
-      }
-    } else if (rule.type === 'pattern') {
-      if (!rule.pattern.test(value as string)) {
-        errors[rule.key] = errors[rule.key] ?? []
-        errors[rule.key]?.push(rule.message)
-      }
-    }
+    switch (type) {
+      case 'required':
+        if(isEmpty(value)){
+          errors[rule.key] = errors[rule.key] ?? []
+          errors[rule.key]?.push(rule.message)
+        }
+        break;
+      case 'pattern':
+        if(!isEmpty(value) && !rule.pattern.test(value as string)){
+          errors[rule.key] = errors[rule.key] ?? []
+          errors[rule.key]?.push(rule.message)
+        }
+        break;
+      default:
+        break;
+    }  
   })
   return errors
 }
 
-// let pdata = {
-//   name: 'ffff',
-//   sign: '',
-// }
-// let prules: Rules<typeof pdata> = [
-  // { key: 'name', type: 'required', message: '请输入姓名' },
-//   { key: 'sign', type: 'required', message: '请输入' },
-//   { key: 'sign', type: 'pattern', pattern: /^\.{4,5}$/, message: '4-5位' },
-// ]
+function isEmpty(value: null | undefined | string | number | FData) {
+  return value === null || value === undefined || value === '' 
+}
 
-// let err = validate(pdata, prules)
-// console.log(err, 'err')
+export const hasErrors = (errors: Record<string,string[]>) => {
+  // return Object.values(errors).some(v=>v.length>0) || false
+  let result = false
+  for (const key in errors) {
+    if(errors[key].length > 0){
+      result = true
+      break
+    }
+  }
+  return result
+}
