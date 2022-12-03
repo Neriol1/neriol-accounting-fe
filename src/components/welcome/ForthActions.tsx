@@ -1,10 +1,11 @@
 import s from './welcome.module.scss'
 import { FunctionalComponent } from 'vue'
+import { SkipFeatures } from '../../shared/skipFeatures'
 export const ForthActions: FunctionalComponent = () => (
   <div class={s.actions}>
-    <router-link class={s.fake} to=''></router-link>
+    <SkipFeatures class={s.fake} />
     <router-link to='/start'>开始记账</router-link>
-    <router-link class={s.fake} to='/start'></router-link>
+    <SkipFeatures class={s.fake} />
   </div>
 )
 
