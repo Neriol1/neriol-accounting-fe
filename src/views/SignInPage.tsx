@@ -35,7 +35,9 @@ export const SignInpage = defineComponent({
         ]),
       )
       if(!hasErrors(errors)){
-        const response = await http.post<{jwt:string}>('/session', formData)
+        const response = await http.post<{jwt:string}>('/session', formData,{
+          params:{_mock:'session'}
+        })
         localStorage.setItem('jwt',response.data.jwt)
         const returnTo = route.query.returnTo?.toString()
         refreshMe()
