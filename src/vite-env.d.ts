@@ -7,3 +7,11 @@ declare module '*.vue' {
 }
 
 type JSONValue = string | number | boolean | null | JSONValue[] | { [key: string]: JSONValue };
+
+type Tag = {
+  id: number
+  user_id: number
+  name: string
+  sign: string
+  kind: 'expenses' | 'income'
+}
