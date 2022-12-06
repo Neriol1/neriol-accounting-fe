@@ -36,6 +36,6 @@ export const mockTagIndex: Mock = (config) =>{
   }else if(config.params.kind === 'expenses' && page === 2){
     return [200, createBody(1)]
   }else{
-    return [200, { resources: createTag(20) }]
+    return [200, createBody(1) ]
   }
 }
