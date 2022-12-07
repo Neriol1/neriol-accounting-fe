@@ -5,16 +5,13 @@ import { DatetimePicker, Popup } from 'vant';
 import { Time } from '../../shared/time';
 
 export const InputPad = defineComponent({
-  // props: {
-  //   name: {
-  //      type: String as PropType<'string'>,
-  //      default: 'string',
-  //   },
-  // },
+  props: {
+    amount:Number,
+    happenAt:String
+  },
   setup: (props, context) => {
-    const refAmount = ref('0')
+    const refAmount = ref(props.amount ? (props.amount / 100).toString() : '0')
     const refDatePickerVisible = ref(false)
-    const refDate = ref<Date>(new Date())
     const appendText = (n: number | string) => {
       const nString = n.toString()
       const doIndex = refAmount.value.indexOf('.')
@@ -50,20 +47,25 @@ export const InputPad = defineComponent({
       { text: '.', onclick: () => {appendText('.')} },
       { text: '0', onclick: () => {appendText(0)} },
       { text: '清空',onclick: () => { refAmount.value = '0'},},
-      { text: '提交', onclick: () => {} },
+      { text: '提交', onclick: () => {
+        context.emit('update:amount', parseFloat(refAmount.value) * 100)
+      } },
     ]
 
     const showDatePicker = ()=>refDatePickerVisible.value = true
     const hideDatePicker = ()=>refDatePickerVisible.value = false
-    const setDate = (date:Date)=>{refDate.value = date; hideDatePicker()}
+    const setDate = (date:Date)=>{ 
+      context.emit('update:happenAt',date.toISOString())
+      hideDatePicker()
+    }
     return () => (
       <>
         <div class={s.dateAndAmount}>
           <span class={s.date}>
             <Icon name='date' class={s.icon}></Icon>
-            <span onClick={showDatePicker}>{new Time(refDate.value).format()}</span>
+            <span onClick={showDatePicker}>{new Time(props.happenAt).format()}</span>
             <Popup v-model:show={refDatePickerVisible.value} position="bottom" >
-              <DatetimePicker value={refDate.value} type="date" title="选择年月日" onConfirm={setDate} onCancel={hideDatePicker}/>
+              <DatetimePicker value={props.happenAt} type="date" title="选择年月日" onConfirm={setDate} onCancel={hideDatePicker}/>
             </Popup>
           </span>
           <span class={s.amount}>{refAmount.value}</span>

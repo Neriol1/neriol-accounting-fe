@@ -1,4 +1,4 @@
-import { defineComponent, ref } from 'vue'
+import { defineComponent, reactive, ref } from 'vue'
 import { MainLayout } from '../../layouts/MainLayout'
 import { Icon } from '../../shared/Icon'
 import { Tab, Tabs } from '../../shared/Tabs'
@@ -9,6 +9,12 @@ export const ItemCreate = defineComponent({
   setup: (props, context) => {
     const onClick = () => {}
     const refKind = ref('支出')
+    const formData = reactive({
+      tagId:0,
+      kind:'',
+      amount:0,
+      happenAt:new Date().toISOString()
+    })
     return () => (
       <MainLayout class={s.layout}>
         {{
@@ -18,14 +24,17 @@ export const ItemCreate = defineComponent({
             <div class={s.wrapper}>
               <Tabs v-model:selected={refKind.value} class={s.tabs}>
                 <Tab name='支出' >
-                  <Tags kind='expenses'></Tags>
+                  {formData.amount}
+                  <Tags kind='expenses' v-model:selected={formData.tagId}></Tags>
                 </Tab>
                 <Tab name='收入'>
-                  <Tags kind='income'></Tags>
+                  <Tags kind='income'  v-model:selected={formData.tagId}></Tags>
                 </Tab>
               </Tabs>
               <div class={s.inputPad_wrapper}>
-                <InputPad></InputPad>
+                <InputPad 
+                  v-model:amount={formData.amount}
+                  v-model:happenAt={formData.happenAt} />
               </div>
             </div>
           ),

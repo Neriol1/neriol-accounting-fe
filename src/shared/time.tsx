@@ -9,8 +9,14 @@
 */
 export class Time {
   readonly date: Date
-  constructor(date = new Date()) {
-    this.date = date
+  constructor(date?: Date | string) {
+    if(date === undefined){
+      this.date = new Date()
+    }else if(typeof date === 'string'){
+      this.date = new Date(date)
+    }else{
+      this.date = date
+    }
   }
   getRaw() {
     return this.date
