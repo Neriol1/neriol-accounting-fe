@@ -44,7 +44,7 @@ export const hasErrors = (errors: Record<string,string[]>) => {
   // return Object.values(errors).some(v=>v.length>0) || false
   let result = false
   for (const key in errors) {
-    if(errors[key].length > 0){
+    if(errors[key]?.length > 0){
       result = true
       break
     }
