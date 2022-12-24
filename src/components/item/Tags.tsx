@@ -25,9 +25,31 @@ export const Tags = defineComponent({
     const onSelect = (tag:Tag)=>{
       context.emit('update:selected',tag.id)
     }
+    const timer = ref<number>()
+    const currentTag = ref<HTMLDivElement>()
+
+    const onLongPress = ()=>{
+      console.log('long press');
+    }
+    const onTouchStart = (e:TouchEvent)=>{
+      currentTag.value = e.target as HTMLDivElement
+      timer.value = setTimeout(()=>{
+        onLongPress()
+      },500)
+    }
+    const onTouchMove = (e:TouchEvent)=>{
+      //如果移动到了其他元素上，就取消长按
+      const pointElement = document.elementFromPoint(e.touches[0].clientX,e.touches[0].clientY)
+      if(currentTag.value !== pointElement && currentTag.value?.contains(pointElement)){
+        clearTimeout(timer.value)
+      }
+    }
+    const onTouchEnd = ()=>{
+      clearTimeout(timer.value)
+    }
     return () => (
       <>
-         <div class={s.tags_wrapper}>
+         <div class={s.tags_wrapper} onTouchmove={onTouchMove}>
           <RouterLink to={`/tags/create?kind=${props.kind}`} class={s.tag}>
             <div class={s.sign}>
               <Icon name='add' class={s.createTag} />
@@ -35,7 +57,10 @@ export const Tags = defineComponent({
             <div class={s.name}>新增</div>
           </RouterLink>
           {tags.value.map((tag) => (
-            <div class={[s.tag, props.selected === tag.id ? s.selected : '']} onClick={()=>onSelect(tag)}>
+            <div class={[s.tag, props.selected === tag.id ? s.selected : '']} 
+                onClick={()=>onSelect(tag)}
+                onTouchstart={onTouchStart}
+                onTouchend={onTouchEnd}>
               <div class={s.sign}>{tag.sign}</div>
               <div class={s.name}>{tag.name}</div>
             </div>
