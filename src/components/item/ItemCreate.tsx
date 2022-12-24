@@ -3,6 +3,7 @@ import { Dialog } from 'vant'
 import { defineComponent, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { MainLayout } from '../../layouts/MainLayout'
+import { BackIcon } from '../../shared/BackIcon'
 import { http } from '../../shared/Http'
 import { Icon } from '../../shared/Icon'
 import { Tab, Tabs } from '../../shared/Tabs'
@@ -11,7 +12,6 @@ import s from './ItemCreate.module.scss'
 import { Tags } from './Tags'
 export const ItemCreate = defineComponent({
   setup: (props, context) => {
-    const onClick = () => {}
     const router = useRouter()
     const formData = reactive({
       tagId:0,
@@ -38,7 +38,7 @@ export const ItemCreate = defineComponent({
     return () => (
       <MainLayout class={s.layout}>
         {{
-          icon: () => <Icon name='left' class={s.iconNav} onClick={onClick} />,
+          icon: () => <BackIcon class={s.iconNav} />,
           title: () => '记一笔',
           default: () => (
             <div class={s.wrapper}>

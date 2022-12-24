@@ -7,6 +7,7 @@ import s from './Tag.module.scss'
 import '../../shared/validate'
 import { Rules,validate } from '../../shared/validate'
 import { TagForm } from './TagForm'
+import { BackIcon } from '../../shared/BackIcon'
 export const TagEdit = defineComponent({
   setup: (props, context) => {
     const formData = reactive({
@@ -31,7 +32,7 @@ export const TagEdit = defineComponent({
       <>
         <MainLayout>
           {{
-            icon: () => <Icon name='left' onClick={() => {}}></Icon>,
+            icon: () => <BackIcon />,
             title: () => <span>新建标签</span>,
             default: () => (
               <>
