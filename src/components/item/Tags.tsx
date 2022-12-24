@@ -1,5 +1,5 @@
 import { defineComponent, PropType, ref } from 'vue'
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRouter } from 'vue-router';
 import { Button } from '../../shared/Button';
 import { http } from '../../shared/Http';
 import { Icon } from '../../shared/Icon';
@@ -27,14 +27,15 @@ export const Tags = defineComponent({
     }
     const timer = ref<number>()
     const currentTag = ref<HTMLDivElement>()
-
-    const onLongPress = ()=>{
-      console.log('long press');
+    const router = useRouter()
+    const onLongPress = (tagId:Tag['id'])=>{
+      //长按后，跳转到编辑页面，编辑完后，返回到当前页面
+      router.push(`/tags/${tagId}/edit?kind=${props.kind}&return_to=${router.currentRoute.value.fullPath}`)
     }
-    const onTouchStart = (e:TouchEvent)=>{
+    const onTouchStart = (e:TouchEvent,tag:Tag)=>{
       currentTag.value = e.target as HTMLDivElement
       timer.value = setTimeout(()=>{
-        onLongPress()
+        onLongPress(tag.id)
       },500)
     }
     const onTouchMove = (e:TouchEvent)=>{
@@ -59,7 +60,7 @@ export const Tags = defineComponent({
           {tags.value.map((tag) => (
             <div class={[s.tag, props.selected === tag.id ? s.selected : '']} 
                 onClick={()=>onSelect(tag)}
-                onTouchstart={onTouchStart}
+                onTouchstart={(e)=>onTouchStart(e,tag)}
                 onTouchend={onTouchEnd}>
               <div class={s.sign}>{tag.sign}</div>
               <div class={s.name}>{tag.name}</div>
