@@ -35,6 +35,10 @@ export const TimeTabsLayout = defineComponent({
       start?: string
       end?: string
     }>({})
+    const tempTime = reactive({
+      start: new Time().format(),
+      end: new Time().format()
+    })
     const timeList = [
       { start: time.firstDayOfMonth().format(), end: time.lastDayOfMonth().format() },
       { start: time.add(-1, 'month').firstDayOfMonth().format(), end: time.add(-1, 'month').lastDayOfMonth().format() },
@@ -44,6 +48,7 @@ export const TimeTabsLayout = defineComponent({
     const onSubmitCustomTime = (e: Event) => {
       e.preventDefault()
       refOverlayVisible.value = false
+      Object.assign(customTime, tempTime)
     }
     const onUpdateSelected = (value:string)=>{
       if(value === '自定义时间'){
@@ -80,8 +85,8 @@ export const TimeTabsLayout = defineComponent({
                   <header>请选择时间</header>
                   <main>
                     <Form onSubmit={onSubmitCustomTime}>
-                      <FormItem type='date' label='开始时间' v-model={customTime.start}></FormItem>
-                      <FormItem type='date' label='结束时间' v-model={customTime.end}></FormItem>
+                      <FormItem type='date' label='开始时间' v-model={tempTime.start}></FormItem>
+                      <FormItem type='date' label='结束时间' v-model={tempTime.end}></FormItem>
                       <FormItem>
                         <div class={s.actions}>
                           <button type='button' onClick={() => (refOverlayVisible.value = false)}>取消</button>
