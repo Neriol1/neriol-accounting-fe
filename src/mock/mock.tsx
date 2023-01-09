@@ -19,6 +19,13 @@ export const mockItemIndex: Mock = (config) => {
   const { kind, page } = config.params
   const per_page = 25
   const count = 26
+  const createTag = (attrs?: any) => ({
+    id: createId(),
+    name: faker.lorem.word(),
+    sign: faker.internet.emoji(),
+    kind: config.params.kind,
+    ...attrs,
+  })
   const createPaper = (page = 1) => ({
     page,
     per_page,
@@ -30,6 +37,7 @@ export const mockItemIndex: Mock = (config) => {
       user_id: createId(),
       amount: Math.floor(Math.random() * 10000),
       tags_id: [createId()],
+      tags: [createTag()],
       happen_at: faker.date.past().toISOString(),
       kind: config.params.kind,
     }))
