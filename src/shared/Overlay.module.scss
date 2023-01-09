@@ -1,3 +1,8 @@
+.email{
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .overlay {
   position: fixed;
   top: var(--top-safe-area-height);
