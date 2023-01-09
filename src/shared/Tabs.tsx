@@ -1,4 +1,4 @@
-import { defineComponent, PropType, ref } from 'vue'
+import { defineComponent, PropType, ref, watch } from 'vue'
 import s from './Tabs.module.scss'
 export const Tabs = defineComponent({
   props: {
@@ -9,6 +9,10 @@ export const Tabs = defineComponent({
       type: String as PropType<string>,
       required: false,
     },
+    renderOnSelect:{
+      type: Boolean,
+      default: false
+    }
   },
   emits:['update:selected'],
   setup: (props, context) => {
@@ -26,7 +30,7 @@ export const Tabs = defineComponent({
           <ol class={[s.tabs_nav, cp + '_tabs_nav']}>
             {tabs.map((v) => (
               <li
-                class={[props.selected === v.props?.name ? [s.selected,cp+'_selected'] : '', cp + '_tabs_nav_item']}
+                class={[props.selected === v.props?.name ? [s.selected, cp + '_selected'] : '', cp + '_tabs_nav_item']}
                 onClick={() => {
                   context.emit('update:selected', v.props?.name)
                 }}>
@@ -34,7 +38,13 @@ export const Tabs = defineComponent({
               </li>
             ))}
           </ol>
-          <div>{tabs.map((v) => <div v-show={v.props?.name === props.selected}>{v}</div>)}</div>
+          <div>
+            {props.renderOnSelect ? (
+              <div>{tabs.find((v) => v.props?.name === props.selected)}</div>
+            ) : (
+              tabs.map((v) => <div v-show={v.props?.name === props.selected}>{v}</div>)
+            )}
+          </div>
         </div>
       )
     }
