@@ -1,4 +1,4 @@
-import { defineComponent, onMounted, PropType, ref } from 'vue'
+import { defineComponent, onMounted, PropType, reactive, ref } from 'vue'
 import { Button } from '../../shared/Button';
 import { Datetime } from '../../shared/Datetime';
 import { FloatButton } from '../../shared/FloatButton';
@@ -34,19 +34,41 @@ export const ItemSummary = defineComponent({
       page.value +=  1
     }
     onMounted(fetchItems)
+    const itemsBalance = reactive({
+      income: 0,
+      expenses: 0,
+      balance: 0,
+    })
+    onMounted(async ()=>{
+      if(!props.startDate || !props.endDate) return 
+      const response = await http.get('/items/balance',{
+        happen_after: props.startDate,
+        happen_before: props.endDate,
+        page: page.value + 1,
+        _mock: 'itemIndexBalance',
+      })
+      Object.assign(itemsBalance, response.data)
+    })
     return () => (
       <div class={s.wrapper}>
-        {
-          items.value ? 
+        {items.value ? (
           <>
             <ul class={s.total}>
-              <li><span>收入</span><span>128</span></li>
-              <li><span>支出</span><span>99</span></li>
-              <li><span>净收入</span><span>39</span></li>
+              <li>
+                <span>收入</span>
+                <span>{itemsBalance.income}</span>
+              </li>
+              <li>
+                <span>支出</span>
+                <span>{itemsBalance.expenses}</span>
+              </li>
+              <li>
+                <span>净收入</span>
+                <span>{itemsBalance.balance}</span>
+              </li>
             </ul>
             <ol class={s.list}>
-            {
-              items.value.map(item=>(
+              {items.value.map((item) => (
                 <li>
                   <div class={s.sign}>
                     <span>{item.tags_id[0]}</span>
@@ -54,21 +76,23 @@ export const ItemSummary = defineComponent({
                   <div class={s.text}>
                     <div class={s.tagAndAmount}>
                       <span class={s.tag}>{item.tags_id[0]}</span>
-                      <span class={s.amount}>￥<Money value={item.amount} /></span>
+                      <span class={s.amount}>
+                        ￥<Money value={item.amount} />
+                      </span>
                     </div>
-                    <div class={s.time}><Datetime value={item.happen_at} /></div>
+                    <div class={s.time}>
+                      <Datetime value={item.happen_at} />
+                    </div>
                   </div>
                 </li>
-              ))
-            }
+              ))}
             </ol>
-            {
-              hasMore.value ? <Button onClick={fetchItems}>加载更多</Button> : <div class={s.more}>没有更多</div>
-            }
-          </> 
-          : <div>记录为空</div>
-        }
-        
+            {hasMore.value ? <Button onClick={fetchItems}>加载更多</Button> : <div class={s.more}>没有更多</div>}
+          </>
+        ) : (
+          <div>记录为空</div>
+        )}
+
         <FloatButton iconName='add' />
       </div>
     )
