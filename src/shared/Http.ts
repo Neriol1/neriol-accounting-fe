@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import { mockItemCreate, mockItemIndex, mockItemIndexBalance, mockSession, mockTagEdit, mockTagIndex, mockTagShow } from "../mock/mock";
+import { mockItemCreate, mockItemIndex, mockItemIndexBalance, mockItemSummary, mockSession, mockTagEdit, mockTagIndex, mockTagShow } from "../mock/mock";
 
 type GetConfig = Omit<AxiosRequestConfig, 'url' | 'params' | 'method'>
 type PostConfig = Omit<AxiosRequestConfig, 'url' | 'data' | 'method'>
@@ -14,7 +14,7 @@ export class Http {
     })
   }
 
-  get<R = unknown>( url:string, query?:Record<string,string | number>, config?: GetConfig){
+  get<R = unknown>( url:string, query?:Record<string,JSONValue>, config?: GetConfig){
     return this.instance.request<R>({ ...config, url, params:query, method:"GET" })
   }
 
@@ -54,6 +54,9 @@ const mock = (response:AxiosResponse) =>{
       return true
     case 'itemIndexBalance':
       [response.status, response.data] = mockItemIndexBalance(response.config)
+      return true
+    case 'itemSummary':
+      [response.status, response.data] = mockItemSummary(response.config)
       return true
   }
   return false
