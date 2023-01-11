@@ -59,6 +59,13 @@ export const Charts = defineComponent({
         value:v.amount
       }))
     )
+    const betterData3 = computed<{ tag: Tag; amount: number; percent: number }[]>(() => {
+      const total = data2.value.reduce((sum, item) => sum + item.amount, 0)
+      return data2.value.map((item) => ({
+        ...item,
+        percent: Math.round((item.amount / total) * 100),
+      }))
+    })
     onMounted(async ()=>{
       const response = await http.get<{ groups: Data2; summary: number }>('/items/summary', {
         happen_after: props.startDate,
@@ -78,7 +85,7 @@ export const Charts = defineComponent({
 
         <LineChart data={betterData.value} />
         <PieChart data={betterData2.value}/>
-        <Bars />
+        <Bars  data={betterData3.value}/>
       </div>
     )
   }
