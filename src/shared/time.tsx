@@ -84,4 +84,7 @@ export class Time {
     }
     return new Time(date)
   }
+  getTimestamp(){
+    return this.date.getTime()
+  }
 }
