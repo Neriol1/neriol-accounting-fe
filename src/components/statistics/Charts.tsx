@@ -28,21 +28,16 @@ export const Charts = defineComponent({
     const data1 = ref<Data1>([])
     const betterData = computed<[string, number][]>(()=>{
       if(!props.startDate || !props.endDate) return []
-      const array = []
       const diff = new Date(props.endDate).getTime() - new Date(props.startDate).getTime()
       const days = diff / DAY + 1
-      let data1Index = 0
-      for(let i = 0; i < days; i++){
+      return Array.from({length:days},(_,i)=>{
         const time = new Time(props.startDate + 'T00:00:00.000+0800').add(i, 'day').getTimestamp()
-        console.log(time,'---time');
-        if(data1.value[data1Index] && new Date(data1.value[data1Index].happen_at).getTime() === time){
-          array.push([new Date(time).toISOString(),data1.value[data1Index].amount])
-          data1Index+=1
-        }else{
-          array.push([new Date(time).toISOString(),0])
-        }
-      }
-      return array as [string, number][]
+        const item = data1.value[0]
+        const amount = (item && new Date(item.happen_at).getTime() === time)
+         ? data1.value.shift()!.amount
+         : 0
+         return [new Date(time).toISOString(),amount]
+      })
     })
     onMounted(async ()=>{
       const response = await http.get<{ groups: Data1; summary: number }>('/items/summary', {
@@ -52,11 +47,6 @@ export const Charts = defineComponent({
         _mock: 'itemSummary',
       })
       data1.value = response.data.groups
-      console.log(data1.value,'-----data1');
-      console.log(props.startDate,'-----props.startDate');
-      console.log(props.endDate,'-----props.endDate');
-      
-      
     })
     return () => (
       <div class={s.wrapper}>
